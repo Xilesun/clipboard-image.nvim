@@ -1,6 +1,6 @@
 # Motivation
 
-Fix health check issue on [clipboard-image](https://github.com/ekickx/clipboard-image.nvim).
+Fix health check issue on [clipboard-image.nvim](https://github.com/ekickx/clipboard-image.nvim).
 
 - https://github.com/ekickx/clipboard-image.nvim/issues/50
 
@@ -17,4 +17,12 @@ Remove the requirement of [pngpaste](https://github.com/jcsalterego/pngpaste) on
 
 # Usage
 
-Refer to [clipboard-image](https://github.com/ekickx/clipboard-image.nvim).
+Refer to [clipboard-image.nvim](https://github.com/ekickx/clipboard-image.nvim).
+
+# Credits
+
+Thanks a lot to:
+
+- [clipboard-image.nvim](https://github.com/ekickx/clipboard-image.nvim)
+- [pngpaste](https://github.com/jcsalterego/pngpaste)
+- [incolla.nvim](https://github.com/mattdibi/incolla.nvim)
