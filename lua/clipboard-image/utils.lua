@@ -3,11 +3,9 @@ local M = {}
 ---Reference https://vi.stackexchange.com/a/2577/33116
 ---@return string os_name
 M.get_os = function()
-  if vim.fn.has "win32" == 1 then
-    return "Windows"
-  end
+  if vim.fn.has "win32" == 1 then return "Windows" end
 
-  local this_os =  tostring(io.popen("uname"):read())
+  local this_os = tostring(io.popen("uname"):read())
   if this_os == "Linux" and
       vim.fn.readfile("/proc/version")[1]:lower():match "microsoft" then
     this_os = "Wsl"
@@ -31,7 +29,7 @@ M.get_clip_command = function()
     end
   elseif this_os == "Darwin" then
     cmd_check = "pngpaste -b 2>&1"
-    cmd_paste = "pngpaste '%s'"
+    cmd_paste = "source ~/.profile && cd '%s' && pngpaste '%s'"
   elseif this_os == "Windows" or this_os == "Wsl" then
     cmd_check = "Get-Clipboard -Format Image"
     cmd_paste = "$content = " .. cmd_check .. ";$content.Save('%s', 'png')"
@@ -48,9 +46,7 @@ M.get_clip_content = function(command)
   local outputs = {}
 
   ---Store output in outputs table
-  for output in command:lines() do
-    table.insert(outputs, output)
-  end
+  for output in command:lines() do table.insert(outputs, output) end
   return outputs
 end
 
@@ -89,9 +85,7 @@ end
 ---@param dir string or table
 M.create_dir = function(dir)
   dir = M.resolve_dir(dir)
-  if vim.fn.isdirectory(dir) == 0 then
-    vim.fn.mkdir(dir, "p")
-  end
+  if vim.fn.isdirectory(dir) == 0 then vim.fn.mkdir(dir, "p") end
 end
 
 ---@param dir string or table
@@ -103,9 +97,7 @@ M.get_img_path = function(dir, img_name, is_txt)
   local img = img_name .. ".png"
 
   ---On cwd
-  if dir == "" or dir == nil then
-    return img
-  end
+  if dir == "" or dir == nil then return img end
 
   if this_os == "Windows" and is_txt ~= "txt" then
     dir = M.resolve_dir(dir, "\\")
@@ -125,17 +117,13 @@ M.insert_txt = function(affix, path_txt)
 
   ---Convert txt_topaste to lines table so it can handle multiline string
   local lines = {}
-  for line in txt_topaste:gmatch "[^\r\n]+" do
-    table.insert(lines, line)
-  end
+  for line in txt_topaste:gmatch "[^\r\n]+" do table.insert(lines, line) end
 
   for line_index, line in pairs(lines) do
     local current_line_num = line_num + line_index - 1
     local current_line = vim.fn.getline(current_line_num)
     ---Since there's no collumn 0, remove extra space when current line is blank
-    if current_line == "" then
-      indent = indent:sub(1, -2)
-    end
+    if current_line == "" then indent = indent:sub(1, -2) end
 
     local pre_txt = current_line:sub(1, line_col)
     local post_txt = current_line:sub(line_col + 1, -1)
@@ -143,9 +131,7 @@ M.insert_txt = function(affix, path_txt)
 
     vim.fn.setline(current_line_num, inserted_txt)
     ---Create new line so inserted_txt doesn't replace next lines
-    if line_index ~= #lines then
-      vim.fn.append(current_line_num, indent)
-    end
+    if line_index ~= #lines then vim.fn.append(current_line_num, indent) end
   end
 end
 

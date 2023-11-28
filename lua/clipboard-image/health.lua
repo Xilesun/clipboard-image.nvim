@@ -1,6 +1,7 @@
 local M = {}
 local utils = require "clipboard-image.utils"
-local health = require "health"
+-- https://github.com/ekickx/clipboard-image.nvim/issues/50
+local health = vim.health or require "health"
 
 local packages = {
   x11 = { name = "xclip", binary = "xclip" },
@@ -8,7 +9,7 @@ local packages = {
   wayland = { name = "wl-clipboard", binary = "wl-paste" },
   darwin = { name = "pngpaste", binary = "pngpaste" },
   windows = { name = "powershell", binary = "powershell.exe" },
-  wsl = { name = "powershell", binary = "powershell.exe" },
+  wsl = { name = "powershell", binary = "powershell.exe" }
 }
 
 local get_platform = function()
@@ -22,9 +23,7 @@ end
 
 local check_package_installed = function(package)
   local name, binary = package.name, package.binary
-  if vim.fn.executable(binary) == 1 then
-    return true, name .. " is installed"
-  end
+  if vim.fn.executable(binary) == 1 then return true, name .. " is installed" end
   return false, name .. " is not installed"
 end
 
@@ -35,9 +34,7 @@ M.check_current_dep = function()
   local platform = get_platform()
   local package = packages[platform]
 
-  if package == nil then
-    return false, "platform is not supported"
-  end
+  if package == nil then return false, "platform is not supported" end
 
   local is_installed, msg = check_package_installed(package)
   return is_installed, msg
