@@ -27,7 +27,7 @@ M.paste_img = function(opts)
   local path_txt = utils.get_img_path(conf.img_dir_txt, conf.img_name, "txt")
 
   utils.create_dir(conf.img_dir)
-  paste_img_to(path, conf.img_name)
+  paste_img_to(path, conf.img_name .. ".png")
 
   utils.insert_txt(conf.affix, path_txt)
 

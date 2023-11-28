@@ -9,10 +9,6 @@ Remove the requirement of [pngpaste](https://github.com/jcsalterego/pngpaste) on
 - https://github.com/jcsalterego/pngpaste/issues/16
 - https://apple.stackexchange.com/questions/418043/macos-saving-images-from-the-clipboard-using-pngpaste-is-faded-and-white
 
-# Requirement
-
-Copy the script in [`script/pngpaste`](./script/pngpaste) to `~/.profile`.
-
 # Installation
 
 ```

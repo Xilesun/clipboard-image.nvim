@@ -29,7 +29,10 @@ M.get_clip_command = function()
     end
   elseif this_os == "Darwin" then
     cmd_check = "pngpaste -b 2>&1"
-    cmd_paste = "source ~/.profile && cd '%s' && pngpaste '%s'"
+    cmd_paste = 'osascript' .. ' -e "tell application \\"System Events\\" to' ..
+        ' write (the clipboard as «class PNGf») to' ..
+        ' (make new file at folder \\"%s\\"' ..
+        ' with properties {name:\\"%s\\"})"'
   elseif this_os == "Windows" or this_os == "Wsl" then
     cmd_check = "Get-Clipboard -Format Image"
     cmd_paste = "$content = " .. cmd_check .. ";$content.Save('%s', 'png')"
